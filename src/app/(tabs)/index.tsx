@@ -1,46 +1,51 @@
-import React, { useState } from 'react';
-import { View } from 'react-native';
+import React from 'react';
+import { ScrollView, View } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
-import { router } from 'expo-router';
 import { createStyles } from '@/theme';
 
-import { BrandSection } from '@/components/welcome/BrandSection';
-import { HeroIllustration } from '@/components/welcome/HeroIllustration';
-import { HeroSection } from '@/components/welcome/HeroSection';
-import { PrimaryButton } from '@/components/welcome/PrimaryButton';
+import { DashboardHeader } from '@/components/dashboard/DashboardHeader';
+import { BalanceCard } from '@/components/dashboard/BalanceCard';
+import { QuickActions } from '@/components/dashboard/QuickActions';
+import { FinancialSummary } from '@/components/dashboard/FinancialSummary';
+import { RecentTransactions } from '@/components/dashboard/RecentTransactions';
+import { BudgetCard } from '@/components/dashboard/BudgetCard';
+import { InsightCard } from '@/components/dashboard/InsightCard';
 
-export default function WelcomeScreen() {
-  const [loading, setLoading] = useState(false);
-
-  const handleContinue = () => {
-    setLoading(true);
-    setTimeout(() => {
-      setLoading(false);
-      router.replace('/onboarding/security');
-    }, 600);
-  };
-
+export default function DashboardScreen() {
   return (
     <View style={styles.container}>
-      <SafeAreaView style={styles.safeArea} edges={['top', 'bottom']}>
-        <View style={styles.content}>
-          <BrandSection />
+      <SafeAreaView style={styles.safeArea} edges={['top']}>
+        <ScrollView
+          style={styles.scroll}
+          contentContainerStyle={styles.scrollContent}
+          showsVerticalScrollIndicator={false}
+        >
+          <DashboardHeader />
 
-          <View style={styles.illustrationSpacer}>
-            <HeroIllustration />
+          <View style={styles.sectionBalance}>
+            <BalanceCard />
           </View>
 
-          <HeroSection />
-
-          <View style={styles.buttonSpacer}>
-            <PrimaryButton
-              title="Continue"
-              onPress={handleContinue}
-              isLoading={loading}
-              delay={600}
-            />
+          <View style={styles.section}>
+            <QuickActions />
           </View>
-        </View>
+
+          <View style={styles.section}>
+            <FinancialSummary />
+          </View>
+
+          <View style={styles.section}>
+            <RecentTransactions />
+          </View>
+
+          <View style={styles.section}>
+            <BudgetCard />
+          </View>
+
+          <View style={styles.sectionLast}>
+            <InsightCard />
+          </View>
+        </ScrollView>
       </SafeAreaView>
     </View>
   );
@@ -57,18 +62,20 @@ const styles = createStyles((t) => ({
     maxWidth: t.layout.maxContentWidth,
     alignSelf: 'center',
   },
-  content: {
+  scroll: {
     flex: 1,
-    alignItems: 'center',
-    justifyContent: 'center',
-    paddingHorizontal: t.spacing.lg,
   },
-  illustrationSpacer: {
-    marginTop: t.spacing.xxxl,
-    marginBottom: t.spacing.xl,
+  scrollContent: {
+    paddingBottom: t.spacing.xxxxl,
   },
-  buttonSpacer: {
-    marginTop: t.spacing.xxxl,
-    width: '100%',
+  sectionBalance: {
+    marginTop: t.spacing.lg,
+    marginBottom: t.spacing.xxl,
+  },
+  section: {
+    marginBottom: t.spacing.xxl,
+  },
+  sectionLast: {
+    marginBottom: t.spacing.xxxl,
   },
 }));

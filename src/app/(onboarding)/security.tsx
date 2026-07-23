@@ -26,13 +26,13 @@ export default function SecurityScreen() {
       await StorageService.setBiometricEnabled(true);
       setBiometricEnabled(true);
       setTimeout(() => {
-        router.replace('/(onboarding)/currency');
+        router.replace('/(onboarding)/personal-setup');
       }, 300);
     }
   };
 
   const handleSkip = () => {
-    router.replace('/(onboarding)/currency');
+    router.replace('/(onboarding)/personal-setup');
   };
 
   return (

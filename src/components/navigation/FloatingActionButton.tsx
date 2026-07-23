@@ -6,7 +6,7 @@ import Animated, {
   useAnimatedStyle,
   withSpring,
 } from 'react-native-reanimated';
-import { createStyles } from '@/theme';
+import { createStyles, colors } from '@/theme';
 
 export interface FloatingActionButtonProps {
   readonly onPress: () => void;
@@ -20,7 +20,7 @@ export function FloatingActionButton({ onPress }: FloatingActionButtonProps) {
   }));
 
   const handlePressIn = useCallback(() => {
-    scale.value = withSpring(0.9, {
+    scale.value = withSpring(0.88, {
       damping: 15,
       stiffness: 300,
       mass: 0.5,
@@ -51,7 +51,7 @@ export function FloatingActionButton({ onPress }: FloatingActionButtonProps) {
       <Animated.View style={[styles.inner, animatedStyle]}>
         <SymbolView
           name={{ ios: 'plus', android: 'add', web: 'add' }}
-          size={22}
+          size={24}
           tintColor="#FFFFFF"
           weight="semibold"
         />
@@ -60,22 +60,26 @@ export function FloatingActionButton({ onPress }: FloatingActionButtonProps) {
   );
 }
 
-const styles = createStyles((t) => ({
+const styles = createStyles(() => ({
   button: {
-    width: 48,
-    height: 48,
-    borderRadius: 24,
-    backgroundColor: t.colors.primary,
+    width: 52,
+    height: 52,
+    borderRadius: 26,
+    backgroundColor: colors.primary,
     alignItems: 'center',
     justifyContent: 'center',
-    zIndex: 10,
+    shadowColor: colors.primary,
+    shadowOffset: { width: 0, height: 6 },
+    shadowOpacity: 0.35,
+    shadowRadius: 10,
+    elevation: 6,
   },
   buttonPressed: {
     opacity: 0.9,
   },
   inner: {
-    width: '100%',
-    height: '100%',
+    width: 24,
+    height: 24,
     alignItems: 'center',
     justifyContent: 'center',
   },

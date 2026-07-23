@@ -7,6 +7,7 @@ const KEYS = {
   SELECTED_CURRENCY: '@myexpenses/selected_currency',
   MONTHLY_BUDGET: '@myexpenses/monthly_budget',
   BIOMETRIC_ENABLED: 'biometric_enabled',
+  BUDGET_CYCLE: '@myexpenses/budget_cycle',
 } as const;
 
 async function secureGet(key: string): Promise<string | null> {
@@ -92,6 +93,21 @@ export const StorageService = {
 
   async setBiometricEnabled(value: boolean): Promise<void> {
     await secureSet(KEYS.BIOMETRIC_ENABLED, String(value));
+  },
+
+  async getBudgetCycle(): Promise<string> {
+    try {
+      const value = await AsyncStorage.getItem(KEYS.BUDGET_CYCLE);
+      return value ?? 'monthly';
+    } catch {
+      return 'monthly';
+    }
+  },
+
+  async setBudgetCycle(cycle: string): Promise<void> {
+    try {
+      await AsyncStorage.setItem(KEYS.BUDGET_CYCLE, cycle);
+    } catch {}
   },
 
   async clearAll(): Promise<void> {
